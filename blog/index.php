@@ -1,81 +1,70 @@
-<?php
+<!DOCTYPE html>
 
-require_once('src/controllers/comment/add.php');
-require_once('src/controllers/comment/update.php');
-require_once('src/controllers/homepage.php');
-require_once('src/controllers/post.php');
+<html>
 
-use Application\Controllers\Comment\Add\AddComment;
-use Application\Controllers\Comment\Update\UpdateComment;
-use Application\Controllers\Homepage\Homepage;
-use Application\Controllers\Post\Post;
+    <head>
 
-try {
-    if (isset($_GET['action']) && $_GET['action'] !== '') {
+      <meta charset="utf-8" />
+      <title>Le blog de l'AVBN</title>
+      <link href="style.css" rel="stylesheet" />
 
-        if ($_GET['action'] === 'post') {
+    </head>
 
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
-                
-                $identifier = $_GET['id'];
+    <body>
 
-                (new Post())->execute($identifier);
+      <h1>Le super blog de l'AVBN !</h1>
+      <p>Derniers billets du blog :</p>
 
-            } else {
+      <?php
+      // Connexion à la base de données
+      try
+      {
 
-                throw new Exception('Aucun identifiant de billet envoyé');
+        $bdd = new PDO('mysql:host=localhost;dbname=blog_form_php;charset=utf8', 'root', '');
+        
+      }
 
-            }
+      catch(Exception $e){
 
-        } elseif ($_GET['action'] === 'addComment') {
+        die( 'Erreur : '.$e->getMessage()   );
 
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
+      }
 
-                $identifier = $_GET['id'];
+      // On récupère les 5 derniers billets
+      $req = $bdd->query('SELECT id, titre, contenu, DATE_FORMAT(date_creation, \'%d/%m/%Y à %Hh%imin%ss\') AS date_creation_fr FROM billets ORDER BY date_creation DESC LIMIT 0, 5');
 
-                (new AddComment())->execute($identifier, $_POST);
+      while ($donnees = $req->fetch())
 
-            } else {
+      {
+      ?>
+        <div class="news">
 
-                throw new Exception('Aucun identifiant de billet envoyé');
+            <h3>
+                <?php echo htmlspecialchars($donnees['titre']); ?>
 
-            }
+                <em>le <?php echo $donnees['date_creation_fr']; ?></em>
 
-        } elseif ($_GET['action'] === 'updateComment') {
+            </h3>
 
-            if (isset($_GET['id']) && $_GET['id'] > 0) {
+            <p>
 
-                $identifier = $_GET['id'];
+                <?php
+                // On affiche le contenu du billet
+                        echo    nl2br ( htmlspecialchars( $donnees['contenu']));
+                ?>
+                <br />
 
-                // It sets the input only when the HTTP method is POST (ie. the form is submitted).
-                $input = null;
+                <em><a href="#">Commentaires</a></em>
 
-                if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            </p>
 
-                    $input = $_POST;
+        </div>
 
-                }
+      <?php
+      } // Fin de la boucle des billets
+      $req->closeCursor();
+      ?>
 
-                (new UpdateComment())->execute($identifier, $input);
+    </body>
 
-            } else {
-
-                throw new Exception('Aucun identifiant de commentaire envoyé');
-
-            }
-        } else {
-
-            throw new Exception("La page que vous recherchez n'existe pas.");
-
-        }
-    } else {
-
-        (new Homepage())->execute();
-
-    }
-} catch (Exception $e) {
-
-    $errorMessage = $e->getMessage();
-
-    require('templates/error.php');
-}
+</html>
