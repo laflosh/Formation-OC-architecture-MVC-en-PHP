@@ -21,20 +21,16 @@
         <div class="news">
 
             <h3>
-                <?php echo htmlspecialchars($post["title"]); ?>
+                <?= htmlspecialchars($post["title"]); ?>
 
-                <em>le <?php echo $post["french_creation_date"]; ?></em>
+                <em>le <?= $post["french_creation_date"]; ?></em>
 
             </h3>
 
             <p>
 
-            <?php
-                // We display the post content
-                echo nl2br ( htmlspecialchars( $post["content"]));
-                ?>
+                <?= nl2br ( htmlspecialchars( $post["content"])); ?>
                 <br />
-
                 <em><a href="#">Commentaires</a></em>
             </p>
 
