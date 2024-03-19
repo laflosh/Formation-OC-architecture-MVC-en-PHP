@@ -1,34 +1,7 @@
 <?php 
-//We connect to the database
-try{
+require("src/model.php");
 
-  $database = new PDO('mysql:host=localhost;dbname=blog_form_php;charset=utf8', 'root', '');
-  
-} catch(Exception $e) {
-
-  die( 'Erreur : '.$e->getMessage()   );
-
-}
-
-//We retrieve the  last blog posts
-$statement = $database -> query(
-  "SELECT id, titre, contenu, DATE_FORMAT(date_creation, '%d/%m/%Y à %Hh%imin%ss') 
-  AS date_creation_fr FROM billets ORDER BY date_creation DESC LIMIT 0, 5"
-);
-
-$posts = [];
-
-while(($row = $statement->fetch())) {
-
-  $post = [
-    "title" => $row["titre"],
-    "french_creation_data" => $row["date_creation_fr"],
-    "content" => $row["contenu"],
-  ];
-
-  $posts[] = $post;
-
-}
+$posts = getPosts();
 
 require("templates/homepage.php");
 
