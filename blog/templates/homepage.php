@@ -1,43 +1,36 @@
-<!DOCTYPE html>
+<?php $title = "Le blog de l'AVBN";?>
 
-<html>
+<?php ob_start();?>
 
-  <head>
+<h1>Le super blog de l'AVBN !</h1>
+<p>Derniers billets du blog :</p>
 
-    <meta charset="utf-8" />
-    <title>Le blog de l'AVBN</title>
-    <link href="style.css" rel="stylesheet" />
+<?php
+foreach($posts as $post) {
+?>
 
-  </head>
+  <div class="news">
 
-  <body>
+    <h3>
 
-    <h1>Le super blog de l'AVBN !</h1>
-    <p>Derniers billets du blog :</p>
+      <?= htmlspecialchars($post["title"]); ?>
 
-    <?php
-      foreach($posts as $post) {
-    ?>
-      <div class="news">
+      <em>le <?= $post["french_creation_date"]; ?></em>
 
-          <h3>
-              <?= htmlspecialchars($post["title"]); ?>
+    </h3>
 
-              <em>le <?= $post["french_creation_date"]; ?></em>
+    <p>
 
-          </h3>
+      <?= nl2br ( htmlspecialchars( $post["content"])); ?>
+      <br />
+      <em><a href="post.php?id=<?=urlencode($post["identifier"])?>">Commentaires</a></em>
 
-          <p>
+    </p>
 
-              <?= nl2br ( htmlspecialchars( $post["content"])); ?>
-              <br />
-              <em><a href="post.php?id=<?=urlencode($post["identifier"])?>">Commentaires</a></em>
-          </p>
+  </div>
 
-      </div>
+<?php } ?>
 
-    <?php } ?>
+<?php $content = ob_get_clean(); ?>
 
-  </body>
-
-</html>
+<?php require("layout.php")?>
