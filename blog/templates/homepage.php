@@ -1,4 +1,4 @@
-<?php $title = "Le blog de l'AVBN";?>
+<?php $title = "Le Blog de l'AVBN";?>
 
 <?php ob_start();?>
 
@@ -23,7 +23,7 @@ foreach($posts as $post) {
 
       <?= nl2br ( htmlspecialchars( $post["content"])); ?>
       <br />
-      <em><a href="post.php?id=<?=urlencode($post["identifier"])?>">Commentaires</a></em>
+      <em><a href="index.php?action=post&id=<?=urlencode($post["identifier"])?>">Commentaires</a></em>
 
     </p>
 

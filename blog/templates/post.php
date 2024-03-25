@@ -1,4 +1,4 @@
-<?php $title = "Le Blog de l'AVBN";?>
+<?php $title = "Le Blog de l'AVBN - Billet " . $_GET["id"]; ?>
 
 <?php ob_start();?>
 
