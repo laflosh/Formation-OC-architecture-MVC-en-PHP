@@ -2,42 +2,42 @@
 
 <html>
 
-    <head>
+  <head>
 
-      <meta charset="utf-8" />
-      <title>Le blog de l'AVBN</title>
-      <link href="style.css" rel="stylesheet" />
+    <meta charset="utf-8" />
+    <title>Le blog de l'AVBN</title>
+    <link href="style.css" rel="stylesheet" />
 
-    </head>
+  </head>
 
-    <body>
+  <body>
 
-      <h1>Le super blog de l'AVBN !</h1>
-      <p>Derniers billets du blog :</p>
+    <h1>Le super blog de l'AVBN !</h1>
+    <p>Derniers billets du blog :</p>
 
-      <?php
-        foreach($posts as $post) {
-      ?>
-        <div class="news">
+    <?php
+      foreach($posts as $post) {
+    ?>
+      <div class="news">
 
-            <h3>
-                <?= htmlspecialchars($post["title"]); ?>
+          <h3>
+              <?= htmlspecialchars($post["title"]); ?>
 
-                <em>le <?= $post["french_creation_date"]; ?></em>
+              <em>le <?= $post["french_creation_date"]; ?></em>
 
-            </h3>
+          </h3>
 
-            <p>
+          <p>
 
-                <?= nl2br ( htmlspecialchars( $post["content"])); ?>
-                <br />
-                <em><a href="#">Commentaires</a></em>
-            </p>
+              <?= nl2br ( htmlspecialchars( $post["content"])); ?>
+              <br />
+              <em><a href="post.php?id=<?=urlencode($post["identifier"])?>">Commentaires</a></em>
+          </p>
 
-        </div>
+      </div>
 
-      <?php } ?>
+    <?php } ?>
 
-    </body>
+  </body>
 
 </html>
