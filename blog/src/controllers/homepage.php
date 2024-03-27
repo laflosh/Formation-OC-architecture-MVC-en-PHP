@@ -1,6 +1,6 @@
 <?php 
 //Homepage controlleur
-require_once("src/model.php");
+require_once("src/model/post.php");
 
 function homepage(){
 

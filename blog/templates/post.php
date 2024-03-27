@@ -1,4 +1,4 @@
-<?php $title = "Le Blog de l'AVBN - Billet " . $_GET["id"]; ?>
+<?php $title = "Le Blog de l'AVBN - Billet " . $post->identifier; ?>
 
 <?php ob_start();?>
 
@@ -8,13 +8,13 @@
 <div class="news">
 
     <h3>
-        <?= htmlspecialchars($post["title"]) ?>
-        <em>le <?= $post["french_creation_date"] ?></em>
+      <?= htmlspecialchars($post->title) ?>
+      <em>le <?= $post->frenchCreationDate ?></em>
     </h3>
 
     <p>
 
-        <?= nl2br(htmlspecialchars($post["content"])) ?>
+      <?= nl2br(htmlspecialchars($post->content)) ?>
 
     </p>
 
@@ -22,7 +22,7 @@
 
 <h2>Commentaires</h2>
 
-<form action="index.php?action=addComment&id=<?= $post["identifier"]?>" method="post">
+<form action="index.php?action=addComment&id=<?= $post->identifier?>" method="post">
 
   <div>
 
@@ -33,7 +33,7 @@
 
   <div>
 
-    <label for="comment">Commenatire</label><br/>
+    <label for="comment">Commentaire</label><br/>
     <textarea id="comment" name="comment"></textarea>
 
   </div>

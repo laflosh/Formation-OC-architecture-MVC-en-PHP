@@ -2,6 +2,15 @@
 
 require_once("database/databaseAcces.php");
 
+class Post {
+
+    public string $title;
+    public string $fenchCreationDate;
+    public string $content;
+    public int $identifier;
+
+}
+
 function getPosts() {
     //We retrieve the  last blog posts
     $database = dbConnect();
@@ -14,12 +23,11 @@ function getPosts() {
 
     while(($row = $statement->fetch())) {
 
-    $post = [
-        "title" => $row["title"],
-        "french_creation_date" => $row["french_creation_date"],
-        "content" => $row["content"],
-        "identifier" => $row["id"],
-    ];
+    $post = new Post();
+    $post->title = $row["title"];
+    $post->frenchCreationDate = $row["french_creation_date"];
+    $post->content = $row["content"];
+    $post->identifier = $row["id"];
 
     $posts[] = $post;
 
@@ -39,14 +47,11 @@ function getPost($identifier){
 
     $row = $statement->fetch();
 
-    $post = [
-
-        "title" => $row["title"],
-        "french_creation_date" => $row["french_creation_date"],
-        "content" => $row["content"],
-        "identifier" => $row["id"],
-
-    ];
+    $post = new Post();
+    $post->title = $row["title"];
+    $post->frenchCreationDate = $row["french_creation_date"];
+    $post->content = $row["content"];
+    $post->identifier = $row["id"];
 
     return $post;
 

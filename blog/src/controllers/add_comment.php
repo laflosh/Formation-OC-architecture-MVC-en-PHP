@@ -1,6 +1,6 @@
 <?php
 //controlleur d'ajoout de commentaire sur un billet 
-require_once("src/model.php");
+require_once("src/model/post.php");
 
 function addComment(string $post, array $input) {
 
