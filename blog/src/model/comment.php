@@ -2,7 +2,15 @@
 
 require_once("database/databaseAcces.php");
 
-function getComments($identifier){
+class Comment {
+
+    public string $author;
+    public string $frenchCreationDate;
+    public string $comment;
+
+}
+
+function getComments($identifier) : array{
 
     $database = dbConnect();
     $statement = $database -> prepare(
@@ -15,13 +23,10 @@ function getComments($identifier){
 
     while(($row = $statement->fetch())){
 
-        $comment = [
-
-            'author' => $row['author'],
-            'french_creation_date' => $row['french_creation_date'],
-            'comment' => $row['comment'],
-            
-        ];
+        $comment = new Comment();
+        $comment->author = $row['author'];
+        $comment->frenchCreationDate = $row['french_creation_date'];
+        $comment->comment = $row['comment'];
 
         $comments[] = $comment;
     }
