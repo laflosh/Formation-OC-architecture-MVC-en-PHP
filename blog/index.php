@@ -4,51 +4,56 @@ require_once("src/controllers/homepage.php");
 require_once("src/controllers/post.php");
 require_once("src/controllers/add_comment.php");
 
-if(isset($_GET["action"]) && $_GET["action"] !== ""){
+try {
 
-    switch($_GET["action"]) {
+    if(isset($_GET["action"]) && $_GET["action"] !== ""){
 
-        case $_GET["action"] === "post":
+        switch($_GET["action"]) {
 
-            if(isset($_GET["id"]) && $_GET["id"] > 0) {
+            case $_GET["action"] === "post":
 
-                $identifier = $_GET["id"];
-    
-                post($identifier);
-            
-            } else {
-            
-                echo "Erreur : aucun identifiant de billet envoyé";
-            
-                die;
-            
-            }
-            break;
+                if(isset($_GET["id"]) && $_GET["id"] > 0) {
 
-        case $_GET["action"] === "addComment":
+                    $identifier = $_GET["id"];
+        
+                    post($identifier);
+                
+                } else {
+                
+                    throw new Exception("Erreur : aucun identifiant de billet envoyé");
+                
+                }
+                break;
 
-            if(isset($_GET["id"]) && $_GET["id"] > 0){
+            case $_GET["action"] === "addComment":
 
-                $identifier = $_GET["id"];
+                if(isset($_GET["id"]) && $_GET["id"] > 0){
 
-                addComment($identifier, $_POST);
+                    $identifier = $_GET["id"];
 
-            } else {
+                    addComment($identifier, $_POST);
 
-                echo "Erreur : auccun identifiant de billet envoyé";
+                } else {
 
-                die;
+                    throw new Exception("Erreur : auccun identifiant de billet envoyé");
 
-            }
+                }
 
-            break;
-            
-        default:
-            echo "Erreur 404 : la page que vous rechercher n'existe pas ";
+                break;
+
+            default:
+                throw new Exception("Erreur 404 : la page que vous rechercher n'existe pas ");
+        }
+
+    } else {
+
+        homepage();
+
     }
 
-} else {
+} catch(Exception $e) {
 
-    homepage();
+    $errorMessage = "Erreur :" . $e->getMessage();
 
+    require_once("templates/error.php");
 }

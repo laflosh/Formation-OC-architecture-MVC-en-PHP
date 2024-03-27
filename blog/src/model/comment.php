@@ -4,8 +4,6 @@ require_once("database/databaseAcces.php");
 
 function getComments($identifier){
 
-    //require_once(dirname(dirname(__DIR__)) . "/database/databaseAcces.php");
-
     $database = dbConnect();
     $statement = $database -> prepare(
         "SELECT id, author, comment, DATE_FORMAT(comment_date, '%d/%m/%Y à %Hh%imin%ss') 
