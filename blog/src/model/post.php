@@ -1,7 +1,5 @@
 <?php 
 
-require_once("database/databaseAcces.php");
-
 class Post {
 
     public string $title;
@@ -11,48 +9,74 @@ class Post {
 
 }
 
-function getPosts() {
-    //We retrieve the  last blog posts
-    $database = dbConnect();
-    $statement = $database -> query(
-        "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%imin%ss') 
-        AS french_creation_date FROM posts ORDER BY creation_date DESC LIMIT 0, 5"
-    );
+class PostRepository{
 
-    $posts = [];
+    public ?PDO $database = null;
 
-    while(($row = $statement->fetch())) {
+    public function getPost($identifier){
 
-    $post = new Post();
-    $post->title = $row["title"];
-    $post->frenchCreationDate = $row["french_creation_date"];
-    $post->content = $row["content"];
-    $post->identifier = $row["id"];
+        require_once("database/databaseAcces.php");
 
-    $posts[] = $post;
-
+        $this->dbConnect();
+        $statement = $this->database-> prepare(
+            "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%imin%ss') 
+            AS french_creation_date FROM posts WHERE id = ?"
+        );
+        $statement->execute([$identifier]);
+    
+        $row = $statement->fetch();
+    
+        $post = new Post();
+        $post->title = $row["title"];
+        $post->frenchCreationDate = $row["french_creation_date"];
+        $post->content = $row["content"];
+        $post->identifier = $row["id"];
+    
+        return $post;
+    
     }
 
-    return $posts;
-}
+    
+    public function getPosts() {
+        //We retrieve the  last blog posts
+        
+        $this->dbConnect();
+        $statement = $this->database -> query(
+            "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%imin%ss') 
+            AS french_creation_date FROM posts ORDER BY creation_date DESC LIMIT 0, 5"
+        );
 
-function getPost($identifier){
+        $posts = [];
 
-    $database = dbConnect();
-    $statement = $database-> prepare(
-        "SELECT id, title, content, DATE_FORMAT(creation_date, '%d/%m/%Y à %Hh%imin%ss') 
-        AS french_creation_date FROM posts WHERE id = ?"
-    );
-    $statement->execute([$identifier]);
+        while(($row = $statement->fetch())) {
 
-    $row = $statement->fetch();
+            $post = new Post();
+            $post->title = $row["title"];
+            $post->frenchCreationDate = $row["french_creation_date"];
+            $post->content = $row["content"];
+            $post->identifier = $row["id"];
 
-    $post = new Post();
-    $post->title = $row["title"];
-    $post->frenchCreationDate = $row["french_creation_date"];
-    $post->content = $row["content"];
-    $post->identifier = $row["id"];
+            $posts[] = $post;
 
-    return $post;
+        }
+
+        return $posts;
+    }
+
+    public function dbConnect(){
+
+        if($this->database === null){
+    
+            require("database/config.php");
+    
+            $this->database = new PDO(
+                sprintf('mysql:host=%s;dbname=%s;port=%s;charset=utf8', MYSQL_HOST, MYSQL_NAME, MYSQL_PORT),
+                MYSQL_USER,
+                MYSQL_PASSWORD,
+            );
+    
+        }
+    
+    }
 
 }
