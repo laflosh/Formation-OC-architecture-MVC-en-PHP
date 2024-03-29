@@ -1,6 +1,7 @@
 <?php
 //controlleur d'ajoout de commentaire sur un billet 
-require_once("src/model/post.php");
+require_once('src/lib/database.php');
+require_once('src/model/comment.php');
 
 function addComment(string $post, array $input) {
 
@@ -18,7 +19,9 @@ function addComment(string $post, array $input) {
 
     }
 
-    $succes = createComment($post, $author, $comment);
+    $commentRepository = new CommentRepository();
+    $commentRepository->connection = new DatabaseConnection();
+    $succes = $commentRepository->createComment($post, $author, $comment);
 
     if(!$succes){
 
