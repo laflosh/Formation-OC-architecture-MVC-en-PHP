@@ -30,6 +30,7 @@ class CommentRepository {
             $comment->author = $row['author'];
             $comment->frenchCreationDate = $row['french_creation_date'];
             $comment->comment = $row['comment'];
+            $comment->identifier = $row['id'];
     
             $comments[] = $comment;
         }
@@ -46,6 +47,17 @@ class CommentRepository {
     
         return ($affectedLines > 0);
     
+    }
+
+    public function deleteComment($comment){
+
+        $statement = $this->connection->getConnection() ->prepare(
+            "DELETE FROM comments WHERE id = :id"
+        );
+        $affectedLines = $statement->execute(["id" => $comment]);
+
+        return ($affectedLines > 0);
+
     }
 
     public function deleteCommentForOnePost($post){

@@ -52,7 +52,10 @@
     foreach($comments as $comment) {
 ?>
 
-    <p><strong><?=htmlspecialchars($comment->author)?></strong> le <?=$comment->frenchCreationDate ?></p>
+  <p>
+    <strong><?=htmlspecialchars($comment->author)?></strong> le <?=$comment->frenchCreationDate ?>  
+    (<a href="index.php?action=deleteComment&id=<?= $comment->identifier?>&postId=<?= $post->identifier?>">Supprimer le commentaire</a>)
+  </p>
 
     <p><?=nl2br(htmlspecialchars($comment->comment))?></p>
 

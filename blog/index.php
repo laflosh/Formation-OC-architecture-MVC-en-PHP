@@ -7,6 +7,7 @@ require_once("src/controllers/post/add_post.php");
 require_once("src/controllers/post/delete_post.php");
 require_once("src/controllers/post/modify_post.php");
 require_once("src/controllers/comment/add_comment.php");
+require_once("src/controllers/comment/delete_comment.php");
 
 try {
 
@@ -85,6 +86,19 @@ try {
 
                 }
 
+                break;
+
+            case $_GET["action"] === "deleteComment":
+
+                if(isset($_GET["id"]) && $_GET["id"] > 0){
+
+                    $identifierComment = $_GET["id"];
+                    $identifierPost = $_GET["postId"];
+
+                    deleteComment($identifierComment,$identifierPost);
+
+                }  
+                
                 break;
 
             default:
