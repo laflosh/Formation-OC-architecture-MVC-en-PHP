@@ -2,8 +2,10 @@
 //routeur
 require_once("src/controllers/homepage.php");
 require_once("src/controllers/post.php");
+require_once("src/controllers/modify_page.php");
 require_once("src/controllers/post/add_post.php");
 require_once("src/controllers/post/delete_post.php");
+require_once("src/controllers/post/modify_post.php");
 require_once("src/controllers/comment/add_comment.php");
 
 try {
@@ -40,6 +42,30 @@ try {
                     $identifier = $_GET["id"];
 
                     deletePost($identifier);
+
+                }
+
+                break;
+
+            case $_GET["action"] === "modifyPost":
+
+                if(isset($_GET["id"]) && $_GET["id"] > 0){
+
+                    $identifier = $_GET["id"];
+
+                    modifyPost($identifier, $_POST); 
+
+                }
+
+                break;
+            
+            case $_GET["action"] === "modifyPage":
+
+                if(isset($_GET["id"]) && $_GET["id"] > 0){
+
+                    $identifier = $_GET["id"];
+
+                    modifyPage($identifier); 
 
                 }
 

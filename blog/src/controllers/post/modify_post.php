@@ -4,19 +4,12 @@ require_once('src/model/post.php');
 
 use Application\Model\Post\PostRepository;
 
-function addPost(array $input){
-
-    $title = null;
-    $content = null;
-
+function modifyPost(int $id ,array $input){
+    
     if(!empty($input["title"]) && !empty($input["content"])) {
 
         $title = $input["title"];
         $content = $input["content"];
-
-    } else {
-
-        throw new Exception("Les données du formulaire sont invalides");
 
     }
 
@@ -24,16 +17,15 @@ function addPost(array $input){
 
     $postRepository = new PostRepository();
     $postRepository->connection = $connection;
-    $succes = $postRepository->createPost($title,$content);
+    $succes = $postRepository->modifyPost($id, $title, $content);
 
     if(!$succes){
 
-        throw new Exception("impossible d\' ajouter le billet !");
+        throw new Exception("impossible de modifier le billet !");
 
     } else {
 
-        header("location:index.php");
+        header("location: index.php?action=post&id=" . $id);
 
     }
-
 }

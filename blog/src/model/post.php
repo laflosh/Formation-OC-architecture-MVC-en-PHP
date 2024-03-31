@@ -84,4 +84,19 @@ class PostRepository{
         return ($affectedLines > 0);
 
     }
+
+    public function modifyPost($post, $title, $content){
+
+        $statement = $this->connection->getConnection() -> prepare(
+            "UPDATE posts SET title = :title, content = :content WHERE id = :id"
+        );
+        $affectedLines = $statement->execute([
+            "title" => $title,
+            "content" => $content,
+            "id" => $post,
+        ]);
+
+        return ($affectedLines > 0);
+
+    }
 }

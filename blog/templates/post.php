@@ -18,7 +18,9 @@
 
   </p>
 
-  <a href="index.php?action=deletePost&id=<?=urlencode($post->identifier)?>">Supprimer le billet</a>
+  <a href="index.php?action=deletePost&id=<?=urlencode($post->identifier)?>">Supprimer le billet</a><br/>
+
+  <a href="index.php?action=modifyPage&id=<?=urlencode($post->identifier)?>">Modifier le contenue du billet</a>
 
 </div>
 
