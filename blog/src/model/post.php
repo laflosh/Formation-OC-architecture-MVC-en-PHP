@@ -73,4 +73,15 @@ class PostRepository{
         return ($affectedLines > 0);
 
     }
+
+    public function deletePost($post){
+
+        $statement = $this->connection->getConnection() ->prepare(
+            "DELETE FROM posts WHERE id = :id"
+        );
+        $affectedLines = $statement->execute(["id" => $post]);
+
+        return ($affectedLines > 0);
+
+    }
 }

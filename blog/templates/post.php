@@ -1,4 +1,4 @@
-<?php $title = "Le Blog de l'AVBN - Billet " . $post->identifier; ?>
+<?php $title = $post->title; ?>
 
 <?php ob_start();?>
 
@@ -7,16 +7,18 @@
 
 <div class="news">
 
-    <h3>
-      <?= htmlspecialchars($post->title) ?>
-      <em>le <?= $post->frenchCreationDate ?></em>
-    </h3>
+  <h3>
+    <?= htmlspecialchars($post->title) ?>
+    <em>le <?= $post->frenchCreationDate ?></em>
+  </h3>
 
-    <p>
+  <p>
 
-      <?= nl2br(htmlspecialchars($post->content)) ?>
+    <?= nl2br(htmlspecialchars($post->content)) ?>
 
-    </p>
+  </p>
+
+  <a href="index.php?action=deletePost&id=<?=urlencode($post->identifier)?>">Supprimer le billet</a>
 
 </div>
 

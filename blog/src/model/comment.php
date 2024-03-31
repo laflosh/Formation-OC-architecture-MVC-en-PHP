@@ -48,4 +48,13 @@ class CommentRepository {
     
     }
 
+    public function deleteCommentForOnePost($post){
+
+        $statement = $this->connection->getConnection() ->prepare(
+            "DELETE FROM comments WHERE post_id = :id"
+        );
+        $statement->execute(["id" => $post]);
+
+    }
+
 }

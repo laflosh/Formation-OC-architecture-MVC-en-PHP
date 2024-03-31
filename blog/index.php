@@ -2,8 +2,9 @@
 //routeur
 require_once("src/controllers/homepage.php");
 require_once("src/controllers/post.php");
-require_once("src/controllers/comment/add_comment.php");
 require_once("src/controllers/post/add_post.php");
+require_once("src/controllers/post/delete_post.php");
+require_once("src/controllers/comment/add_comment.php");
 
 try {
 
@@ -30,6 +31,18 @@ try {
 
                     addPost($_POST);
     
+                break;
+
+            case $_GET["action"] === "deletePost":
+
+                if(isset($_GET["id"]) && $_GET["id"] > 0){
+
+                    $identifier = $_GET["id"];
+
+                    deletePost($identifier);
+
+                }
+
                 break;
 
             case $_GET["action"] === "addComment":
