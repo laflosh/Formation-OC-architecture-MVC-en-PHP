@@ -2,7 +2,8 @@
 //routeur
 require_once("src/controllers/homepage.php");
 require_once("src/controllers/post.php");
-require_once("src/controllers/add_comment.php");
+require_once("src/controllers/comment/add_comment.php");
+require_once("src/controllers/post/add_post.php");
 
 try {
 
@@ -23,6 +24,12 @@ try {
                     throw new Exception("Erreur : aucun identifiant de billet envoyé");
                 
                 }
+                break;
+
+            case $_GET["action"] === "addPost":
+
+                    addPost($_POST);
+    
                 break;
 
             case $_GET["action"] === "addComment":
