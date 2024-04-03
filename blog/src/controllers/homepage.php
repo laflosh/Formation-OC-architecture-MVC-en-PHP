@@ -9,7 +9,7 @@ function homepage(){
 
     $connection = new DatabaseConnection();
 
-    $postRepository = new PostRepository();
+    $postRepository = new PostRepository($connection);
     $postRepository->connection = $connection;
     $posts = $postRepository->getPosts();
 

@@ -1,4 +1,4 @@
-<?php $title = "Modification de contenue"; ?>
+<?php $title = "Modification de contenu"; ?>
 
 <?php ob_start();?>
 
@@ -12,14 +12,14 @@
   <div>
 
     <label for="title">Titre</label><br/>
-    <input type="text" id="title" name="title" value=<?= $post->title?>>
+    <input type="text" id="title" name="title" value="<?= $post->title?>" />
 
   </div>
 
   <div>
 
     <label for="title">Contenue du billet</label><br/>
-    <textarea id="title" name="title"><?= $post->content?></textarea>
+    <textarea id="title" name="content"><?= $post->content?></textarea>
 
   </div>
 

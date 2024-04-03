@@ -6,11 +6,11 @@ use Application\Model\Post\PostRepository;
 
 function modifyPost(int $id ,array $input){
     
-    if(!empty($input["title"]) && !empty($input["content"])) {
+    $title = trim($input["title"]);
+    $content = trim($input["content"]);
 
-        $title = $input["title"];
-        $content = $input["content"];
-
+    if(empty($title) || empty($content) ){
+        throw new Exception("impossible de modifier le billet ! Les données sont vides");
     }
 
     $connection = new DatabaseConnection();
@@ -25,7 +25,9 @@ function modifyPost(int $id ,array $input){
 
     } else {
 
-        header("location: index.php?action=post&id=" . $id);
+        if(!headers_sent()){
+            header("location: index.php?action=post&id=" . $id);
+        }
 
     }
 }

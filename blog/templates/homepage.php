@@ -44,7 +44,7 @@ foreach($posts as $post) {
 
   <div>
 
-    <label for="content">Commentaire</label><br/>
+    <label for="content">Contenue</label><br/>
     <textarea id="content" name="content"></textarea>
 
   </div>

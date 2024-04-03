@@ -10,8 +10,7 @@ function post(string $identifier){
 
     $connection = new DatabaseConnection();
 
-    $postRepository = new PostRepository();
-    $postRepository->connection = $connection;
+    $postRepository = new PostRepository($connection);
     $post = $postRepository->getPost($identifier);
 
     $commentRepository = new CommentRepository();

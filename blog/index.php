@@ -53,7 +53,6 @@ try {
                 if(isset($_GET["id"]) && $_GET["id"] > 0){
 
                     $identifier = $_GET["id"];
-
                     modifyPost($identifier, $_POST); 
 
                 }

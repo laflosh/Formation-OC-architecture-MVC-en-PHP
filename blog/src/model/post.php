@@ -17,6 +17,10 @@ class PostRepository{
 
     public \DatabaseConnection $connection;
 
+    public function __construct(\DatabaseConnection $connection) {
+        $this->connection = $connection;
+    }
+
     public function getPost($identifier) : Post {
 
         $statement = $this->connection->getConnection()-> prepare(
@@ -66,9 +70,13 @@ class PostRepository{
     public function createPost(string $title,string $content){
 
         $statement = $this->connection->getConnection() -> prepare(
-            "INSERT INTO posts(title, content, creation_date) VALUES (? ,? , NOW())"
+            "INSERT INTO posts(title, content, creation_date) VALUES (:title , :content , NOW())"
         );
-        $affectedLines = $statement->execute([$title,$content]);
+
+        $affectedLines = $statement->execute([
+            "content" => $content,
+            "title" => $title
+        ]);
 
         return ($affectedLines > 0);
 
@@ -90,9 +98,10 @@ class PostRepository{
         $statement = $this->connection->getConnection() -> prepare(
             "UPDATE posts SET title = :title, content = :content WHERE id = :id"
         );
+
         $affectedLines = $statement->execute([
-            "title" => $title,
             "content" => $content,
+            "title" => $title,
             "id" => $post,
         ]);
 

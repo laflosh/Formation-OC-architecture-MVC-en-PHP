@@ -22,8 +22,7 @@ function addPost(array $input){
 
     $connection = new DatabaseConnection();
 
-    $postRepository = new PostRepository();
-    $postRepository->connection = $connection;
+    $postRepository = new PostRepository($connection);
     $succes = $postRepository->createPost($title,$content);
 
     if(!$succes){

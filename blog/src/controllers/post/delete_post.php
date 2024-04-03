@@ -13,8 +13,7 @@ function deletePost($post){
     $commentRepository->connection = $connection;
     $commentRepository->deleteCommentForOnePost($post);
 
-    $postRepository = new PostRepository();
-    $postRepository->connection = $connection;
+    $postRepository = new PostRepository($connection);
     $succes = $postRepository->deletePost($post);
 
     if(!$succes){
